@@ -1,5 +1,5 @@
-define(['jquery', 'uri', 'base/ui'],
-  function ($, URI, UI) {
+define(['jquery', 'uri', 'base/ui', 'base/localized'],
+  function ($, URI, UI, localized) {
   'use strict';
 
   var $body = $("body"),
@@ -54,7 +54,7 @@ define(['jquery', 'uri', 'base/ui'],
     e.preventDefault();
     var $this = $(this),
         makeID = $this.data("make-id");
-    if(confirm("Are you sure you want to delete this make?")) {
+    if(confirm(localized.get("Are you sure you want to delete this make?"))) {
       $.post("/remove", {
         makeID: makeID,
         _csrf: $("meta[name='X-CSRF-Token']").attr("content")

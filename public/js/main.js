@@ -21,38 +21,46 @@ requirejs.config({
   }
 });
 
-require(['jquery','base/carousel', 'base/marquee', 'base/email-signup', 'tabzilla', 'sso-ux'],
-  function ($, carousel, Marquee, privacy) {
-    'use strict';
-    var $html = $('html, body');
-    var $window = $(window);
-    var $backToTop = $('.backToTop');
+require(['jquery','base/carousel', 'base/marquee', 'base/email-signup',
+         'base/localized', 'tabzilla', 'sso-ux'],
+  function ($, carousel, Marquee, privacy, localized) {
+    function start() {
+      'use strict';
+      var $html = $('html, body');
+      var $window = $(window);
+      var $backToTop = $('.backToTop');
 
-    //Footer
-    $backToTop.on('click', function (e) {
-      $html.animate({scrollTop : 0}, 500);
-      return false;
-    });
-    $window.scroll(function() {
-     if ($window.scrollTop() > 100) {
-       $backToTop.addClass('addMore');
-     } else {
-       $backToTop.removeClass('addMore');
-     }
-    });
-    carousel.attachToCTA();
-
-    // Create Partner marquees
-    if ($('ul.sponsors').length) {
-      $('ul.sponsors').each(function () {
-        var marquee = new Marquee(this);
-        marquee.startRotation();
+      //Footer
+      $backToTop.on('click', function (e) {
+        $html.animate({scrollTop : 0}, 500);
+        return false;
       });
+      $window.scroll(function() {
+        if ($window.scrollTop() > 100) {
+          $backToTop.addClass('addMore');
+        } else {
+          $backToTop.removeClass('addMore');
+        }
+      });
+      carousel.attachToCTA();
+
+      // Create Partner marquees
+      if ($('ul.sponsors').length) {
+        $('ul.sponsors').each(function () {
+          var marquee = new Marquee(this);
+          marquee.startRotation();
+        });
+      }
+
+      // Set up page-specific js
+      var pageJS = $('#require-js').data('page');
+      if (pageJS) {
+        require([pageJS]);
+      }
     }
 
-    // Set up page-specific js
-    var pageJS = $('#require-js').data('page');
-    if (pageJS) {
-      require([pageJS]);
-    }
-});
+    // Wait for the DOM to be ready, and localized strings to be available
+    // on the client-side.
+    localized.ready(start);
+  }
+);

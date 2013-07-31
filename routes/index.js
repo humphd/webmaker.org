@@ -26,6 +26,11 @@ module.exports = {
   remove: require("./remove"),
   search: require("./search"),
   sitemap: require("./sitemap"),
+  strings: function( i18n ) {
+    return function( req, res ) {
+      res.jsonp( i18n.getStrings( req.params.lang || req.lang || 'en-US' ) );
+    };
+  },
   tag: function( req, res ) {
     res.redirect( "/" + req.lang + "/search?type=tags&q=" + req.params.tag );
   },
