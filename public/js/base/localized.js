@@ -18,7 +18,7 @@ define( [ 'jquery' ], function( $ ) {
   // Get the current lang from the document's HTML element, which the
   // server set when the page was first rendered. This saves us having
   // to pass extra locale info around on the URL.
-  var lang = $( 'html' ).attr( 'lang' ) || 'en_US';
+  var lang = $( 'html' ).attr( 'lang' ) || 'en-US';
   $.ajax({
     type: 'GET',
     url: '/strings/' + lang,
