@@ -185,7 +185,7 @@ app.get( "/sso/include-transparent.html", routes.include("transparent" ));
 app.get( "/sitemap.xml", routes.sitemap);
 
 // Localized Strings
-app.get( "/strings", routes.strings( i18n ) );
+app.get( "/strings/:lang?", routes.strings( i18n ) );
 
 /**
  * Legacy Webmaker Redirects
