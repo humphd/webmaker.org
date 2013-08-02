@@ -9,9 +9,7 @@ define( [ 'jquery' ], function( $ ) {
     $( function() {
       _strings = json;
       _isReady = true;
-      if (typeof _readyCallback === "function") {
-        _readyCallback();
-      }
+      _readyCallback();
     });
   };
 
@@ -45,6 +43,12 @@ define( [ 'jquery' ], function( $ ) {
 
     // Localized strings are ready
     ready: function( cb ) {
+      cb = cb || function(){};
+      // It's possible the strings are already loaded
+      if ( _isReady ) {
+        cb();
+      }
+      // If not, queue up this callback for when they do arrive
       _readyCallback = cb;
     },
 
